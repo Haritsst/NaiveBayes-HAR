@@ -29,7 +29,7 @@ def load_data():
     df.dropna(inplace=True)
     return df
 
-@st.cache_resource
+
 def load_model_and_scaler():
     df = load_data()
     X = df.drop('Heart Attack Risk', axis=1)
