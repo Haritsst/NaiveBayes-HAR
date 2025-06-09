@@ -34,12 +34,19 @@ def load_model_and_scaler():
     df = load_data()
     X = df.drop('Heart Attack Risk', axis=1)
     y = df['Heart Attack Risk']
+    
+    # Validasi bahwa jumlah baris X dan y sama
+    assert X.shape[0] == y.shape[0], "Mismatch jumlah sampel pada X dan y"
+    
     ros = RandomOverSampler(random_state=42)
     X_resampled, y_resampled = ros.fit_resample(X, y)
+    
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X_resampled)
+    
     model = GaussianNB()
     model.fit(X_scaled, y_resampled)
+    
     return model, scaler, X, y
 
 def plot_roc_curve(model, X, y, scaler):
